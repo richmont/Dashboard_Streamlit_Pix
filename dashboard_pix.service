@@ -1,0 +1,11 @@
+[Unit]
+Description=Dashboard feita com streamlit e python para controle de vendas no pix
+[Service]
+After=multi-user.target[Service]
+Type=simple
+Restart=always
+WorkingDirectory=/opt/dashboard_pix/Dashboard_Streamlit_Pix/
+ExecStart=/opt/dashboard_pix/bin/streamlit run /opt/dashboard_pix/Dashboard_Streamlit_Pix/dashboard.py
+EnvironmentFile=/opt/dashboard_pix/dashboard_pix.conf
+[Install]
+WantedBy=multi-user.target

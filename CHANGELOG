@@ -1,0 +1,16 @@
+# Pequenos ajustes (15/12/23)
+- Adequação do código para obedecer regras de linter
+- Decorador adicionado a métodos estáticos
+- Variável de ambiente de testes diferente do ambiente de produção
+- Novas docstrings incluídas
+- Migração do repositório para um novo, antigo mantido sob permissão privada por motivo de registro histórico
+
+# Migração para MySQL
+- Portar consultas e inserções funcionais do SQLite, SGBD original do sistema, para MySQL/MariaDB
+
+## 08/11/23
+- strptime para DATE_FORMAT: Conversão de DATETIME para String feita usando um método diferente
+- Testado em ambiente MariaDB versão 11.1.2 (Docker) com Python 3.11.5 (versão atual do Arch Linux)
+- Tentativa de utilizar o conector MariaDB versão 1.1.8, gerando erros ao tentar inserir dados. [Método construtor padrão do conector é Timestamp para conter datetime](https://mariadb-corporation.github.io/mariadb-connector-python/module.html#type-constructors), incompatível com a versão atual do MariaDB
+- Conector alterado para mysqlclient versão 2.2.0, funcional
+- Criação de banco de dados e tabelas automaticamente ao inicializar, caso não estejam presentes
