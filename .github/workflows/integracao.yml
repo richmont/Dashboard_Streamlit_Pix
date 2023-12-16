@@ -1,0 +1,46 @@
+name: Teste de Integração
+
+on: 
+  workflow_dispatch
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      mariadb:
+        image: mariadb:latest
+        env:
+          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+          MYSQL_DATABASE: test
+        ports:
+          - 3306:3306
+        #options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    env:
+      TEST_DATABASE_URL: mysql://root:${{ secrets.MYSQL_ROOT_PASSWORD }}@127.0.0.1:3306/test
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      #- name: Configuração do Docker Compose
+      #  run: docker-compose -f .github/docker-compose.yml up -d
+
+      - name: Configuração do Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11.0
+
+      - name: Instalação de dependências
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Execução dos Testes
+        #run: python -m unittest discover -s tests -p '*_test.py'
+        run: python -m unittest discover tests
+
+      #- name: Desligamento do Docker Compose
+      #  run: docker-compose -f .github/docker-compose.yml down
+
